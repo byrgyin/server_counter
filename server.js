@@ -239,5 +239,5 @@ wss.on('connection', async (ws) => {
   })
 })
 server.listen(port, () => {
-  console.log(`Listening on ws://localhost:${port}`);
+  console.log(`Listening on wss://localhost:${port}`);
 });
