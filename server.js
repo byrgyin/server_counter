@@ -12,7 +12,7 @@ const app = express();
 const server = http.createServer(app);
 const wss = new WebSocketServer({server});
 
-const clientPromise = MongoClient.connect(process.env.DB_URI, {
+const clientPromise = MongoClient.connect('mongodb+srv://byrgyin:RLQvSzK3FgpEV4dB@cluster0.udpyldq.mongodb.net/users?retryWrites=true&w=majority&appName=Cluster0', {
   maxPoolSize: 10,
 });
 app.use(async (req, res, next) => {
