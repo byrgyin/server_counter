@@ -8,7 +8,7 @@ dotenv.config();
 
 const app = express();
 
-const clientPromise = MongoClient.connect('mongodb://byrgyin:byrgyin@amvera-byrgyin-run-mongodb:27017/', {
+const clientPromise = MongoClient.connect('DB_URI = mongodb+srv://byrgyin:RLQvSzK3FgpEV4dB@cluster0.udpyldq.mongodb.net/users?retryWrites=true&w=majority&appName=Cluster0', {
   maxPoolSize: 10,
 });
 app.use(async (req, res, next) => {
