@@ -26,5 +26,4 @@ const config = {
   // Don't change this, unless you know what you're doing
   moduleSystem: 'commonjs',
 };
-
 export default config;

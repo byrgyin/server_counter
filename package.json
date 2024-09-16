@@ -5,11 +5,11 @@
   "description": "",
   "keywords": [],
   "type": "module",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "db:migrate": "migrate-mongo up",
-    "dev": "cross-env npm run db:migrate && nodemon server.js",
-    "start": "cross-env npm run db:migrate && node server.js",
+    "dev": "cross-env npm run db:migrate && nodemon index.js",
+    "start": "cross-env npm run db:migrate && node index.js",
     "test": "echo \"Tests passed\" && exit 0",
     "prettify": "prettier --write",
     "prettify:all": "prettier --write \"./**/*.{js,json}\"",
@@ -63,9 +63,8 @@
     "dotenv": "^16.4.5",
     "express": "^4.17.1",
     "express-basic-auth": "^1.2.1",
-    "migrate-mongo": "^11.0.0",
-    "mongodb": "^6.8.0",
     "nanoid": "^3.1.10",
-    "ws": "^8.18.0"
+    "migrate-mongo": "^11.0.0",
+    "mongodb": "^6.8.0"
   }
 }
