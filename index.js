@@ -7,6 +7,17 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
+app.use(express.json());
+// Routes
+/*
+app.get("/", async (req, res, next) => {
+  return res.status(200).json({
+    title: "Express Testing",
+    message: "The app is working properly!",
+  });
+});
+*/
+app.get("/", (req, res) => res.send("Express on Vercel"));
 
 const clientPromise = MongoClient.connect(
   "mongodb+srv://byrgyin:RLQvSzK3FgpEV4dB@cluster0.udpyldq.mongodb.net/users?retryWrites=true&w=majority&appName=Cluster0",
@@ -14,6 +25,7 @@ const clientPromise = MongoClient.connect(
     maxPoolSize: 10,
   }
 );
+
 app.use(async (req, res, next) => {
   try {
     const client = await clientPromise;
@@ -23,6 +35,7 @@ app.use(async (req, res, next) => {
     next(err);
   }
 });
+
 function stringToBoolean(str) {
   if (str === "true") {
     return true;
@@ -67,9 +80,6 @@ const deleteSession = async (db, sessionId) => {
   await db.collection("sessions").deleteOne({ sessionId });
 };
 
-app.use(express.json());
-// app.use(cookieParser());
-
 const auth = () => async (req, res, next) => {
   console.log("auth");
   console.log(req.headers.sessionid);
@@ -83,15 +93,6 @@ const auth = () => async (req, res, next) => {
 };
 
 /*GET Q */
-// app.get("/", auth(), (req, res) => {
-//   res.render("index", {
-//     user: req.user,
-//     authError: req.query.authError === "true" ? "Wrong username or password" : req.query.authError,
-//     duplicateError:
-//       req.query.duplicateError === "true" ? "A user with that name already exists" : req.query.duplicateError,
-//   });
-// });
-app.get("/", (req, res) => res.send("Express on Vercel"));
 
 app.get("/api/timers", auth(), async (req, res) => {
   const { isActive } = req.query;
@@ -120,9 +121,10 @@ app.get("/api/timers/:id", auth(), async (req, res) => {
     .toArray();
   res.json(timers);
 });
-/*END GET Q */
 
-/*POST Q */
+// /*END GET Q */
+
+// /*POST Q */
 app.post("/api/timers", auth(), async (req, res) => {
   const { description } = req.body;
   const newTimer = {
@@ -200,6 +202,8 @@ app.post("/signup", async (req, res) => {
     // res.json({ sessionId })
   }
 });
-/*ENDPOST Q */
 
-export default app;
+// connection
+const port = process.env.PORT || 9001;
+app.listen(port, () => console.log(`Listening to port ${port}`));
+/*ENDPOST Q */
