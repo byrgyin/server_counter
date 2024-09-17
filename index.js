@@ -88,6 +88,9 @@ const auth = () => async (req, res, next) => {
 //       req.query.duplicateError === "true" ? "A user with that name already exists" : req.query.duplicateError,
 //   });
 // });
+app.get("/", (req, res) => res.send("Express on Vercel"));
+
+app.listen(3000, () => console.log("Server ready on port 3000."));
 
 app.get("/api/timers", auth(), async (req, res) => {
   const { isActive } = req.query;
