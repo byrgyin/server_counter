@@ -8,9 +8,12 @@ dotenv.config();
 
 const app = express();
 
-const clientPromise = MongoClient.connect('DB_URI = mongodb+srv://byrgyin:RLQvSzK3FgpEV4dB@cluster0.udpyldq.mongodb.net/users?retryWrites=true&w=majority&appName=Cluster0', {
-  maxPoolSize: 10,
-});
+const clientPromise = MongoClient.connect(
+  "mongodb+srv://byrgyin:RLQvSzK3FgpEV4dB@cluster0.udpyldq.mongodb.net/users?retryWrites=true&w=majority&appName=Cluster0",
+  {
+    maxPoolSize: 10,
+  }
+);
 app.use(async (req, res, next) => {
   try {
     const client = await clientPromise;
@@ -68,8 +71,8 @@ app.use(express.json());
 // app.use(cookieParser());
 
 const auth = () => async (req, res, next) => {
-  console.log('auth')
-  console.log(req.headers.sessionid)
+  console.log("auth");
+  console.log(req.headers.sessionid);
   if (!req.headers.sessionid) {
     return next();
   }
@@ -90,8 +93,6 @@ const auth = () => async (req, res, next) => {
 // });
 app.get("/", (req, res) => res.send("Express on Vercel"));
 
-app.listen(3000, () => console.log("Server ready on port 3000."));
-
 app.get("/api/timers", auth(), async (req, res) => {
   const { isActive } = req.query;
   const isActiveBool = stringToBoolean(isActive);
@@ -110,10 +111,13 @@ app.get("/api/timers", auth(), async (req, res) => {
   res.json(timers.sort((a, b) => a.description.localeCompare(b.description)));
 });
 
-app.get("/api/timers/:id",auth(),async (req,res)=>{
+app.get("/api/timers/:id", auth(), async (req, res) => {
   const userId = req.user._id.toString();
-  const {id} = req.params;
-  const timers = await req.db.collection("timers").find({ _id:new ObjectId(id),user_id: userId }).toArray();
+  const { id } = req.params;
+  const timers = await req.db
+    .collection("timers")
+    .find({ _id: new ObjectId(id), user_id: userId })
+    .toArray();
   res.json(timers);
 });
 /*END GET Q */
@@ -165,15 +169,15 @@ app.post("/login", async (req, res) => {
 
   const hashPW = createHashPassword(password);
   const user = await findUserByUsername(req.db, username);
-  console.log(user)
+  console.log(user);
 
   if (!user || user.password !== hashPW) {
     return res.redirect("/?authError=true");
   }
   const userIdString = user._id.toString();
   const sessionId = await createSession(req.db, userIdString);
-  res.setHeader('sessionId',`${sessionId}`);
-  res.send('Headers received');
+  res.setHeader("sessionId", `${sessionId}`);
+  res.send("Headers received");
 });
 
 app.post("/signup", async (req, res) => {
@@ -189,17 +193,13 @@ app.post("/signup", async (req, res) => {
     };
     const { insertedId } = await createUser(req.db, newUser);
     const sessionId = await createSession(req.db, insertedId.toString());
-    res.setHeader('sessionId',`${sessionId}`);
-    res.send('Headers received');
+    res.setHeader("sessionId", `${sessionId}`);
+    res.send("Headers received");
     console.log(username);
     console.log(password);
     // res.json({ sessionId })
   }
 });
-/*ENDasdsadsa POST Q */
+/*ENDPOST Q */
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Listening on http://localhost:${port}`);
-});
-/*dsfsdjdfs*/
+export default app;
