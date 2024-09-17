@@ -22,7 +22,11 @@ app.get("/", (req, res) => res.send("Express on Vercel"));
 const clientPromise = MongoClient.connect(
   "mongodb+srv://byrgyin:RLQvSzK3FgpEV4dB@cluster0.udpyldq.mongodb.net/users?retryWrites=true&w=majority&appName=Cluster0",
   {
-    maxPoolSize: 10,
+    autoIndex: false,
+    maxPoolSize: 10000,
+    minPoolSize: 10,
+    socketTimeoutMS: 1000 * 60 * 2,
+    compressors: ["snappy", "zlib"],
   }
 );
 
