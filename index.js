@@ -20,25 +20,33 @@ app.get("/", async (req, res, next) => {
 app.get("/", (req, res) => res.send("Express on Vercel"));
 
 const clientPromise = MongoClient.connect(
-  "mongodb+srv://byrgyin:RLQvSzK3FgpEV4dB@cluster0.udpyldq.mongodb.net/users?retryWrites=true&w=majority&appName=Cluster0",
+  "mongodb://root:HR0%5C7V58zZ%60s@107.191.48.201:32782/",
   {
-    autoIndex: false,
-    maxPoolSize: 10000,
-    minPoolSize: 10,
+    maxPoolSize: 10,
+    minPoolSize: 1,
     socketTimeoutMS: 1000 * 60 * 2,
-    compressors: ["snappy", "zlib"],
   }
 );
+// app.use(async (req, res, next) => {
+//   try {
+//     const client = await clientPromise;
+//     req.db = client.db("users");
+//     next();
+//   } catch (err) {
+//     console.error("Database connection error:", err);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
 
-app.use(async (req, res, next) => {
-  try {
-    const client = await clientPromise;
-    req.db = client.db("users");
-    next();
-  } catch (err) {
-    next(err);
-  }
-});
+// app.use(async (req, res, next) => {
+//   try {
+//     const client = await clientPromise;
+//     req.db = client.db("users");
+//     next();
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 function stringToBoolean(str) {
   if (str === "true") {
@@ -143,7 +151,7 @@ app.post("/api/timers", auth(), async (req, res) => {
   await createTimer(req.db, newTimer);
   res.json(newTimer);
 });
-/*d*/
+
 app.post("/api/timers/:id/stop", auth(), async (req, res) => {
   const userId = req.user._id.toString();
   const timer = await req.db.collection("timers").findOne({ user_id: userId, isActive: true });
@@ -203,7 +211,6 @@ app.post("/signup", async (req, res) => {
     res.send("Headers received");
     console.log(username);
     console.log(password);
-    // res.json({ sessionId })
   }
 });
 
