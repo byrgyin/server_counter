@@ -20,7 +20,7 @@ app.get("/", async (req, res, next) => {
 app.get("/", (req, res) => res.send("Express on Vercel"));
 
 const clientPromise = MongoClient.connect(
-  "mongodb://root:HR0%5C7V58zZ%60s@107.191.48.201:32782/",
+  "mongodb+srv://byrgyin:RLQvSzK3FgpEV4dB@cluster0.udpyldq.mongodb.net/users?retryWrites=true&w=majority&appName=Cluster0",
   {
     maxPoolSize: 10,
     minPoolSize: 1,
@@ -38,15 +38,15 @@ const clientPromise = MongoClient.connect(
 //   }
 // });
 
-// app.use(async (req, res, next) => {
-//   try {
-//     const client = await clientPromise;
-//     req.db = client.db("users");
-//     next();
-//   } catch (err) {
-//     next(err);
-//   }
-// });
+app.use(async (req, res, next) => {
+  try {
+    const client = await clientPromise;
+    req.db = client.db("users");
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 
 function stringToBoolean(str) {
   if (str === "true") {
