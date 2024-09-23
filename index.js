@@ -12,23 +12,13 @@ app.use(express.json());
 app.get("/", (req, res) => res.send("Express on Vercel"));
 
 const clientPromise = MongoClient.connect(
-  "mongodb://root:HR0%5C7V58zZ%60s@107.191.48.201:32782/",
+  "mongodb+srv://byrgyin:RLQvSzK3FgpEV4dB@cluster0.udpyldq.mongodb.net/users?retryWrites=true&w=majority&appName=Cluster0",
   {
     maxPoolSize: 10,
     minPoolSize: 1,
     socketTimeoutMS: 1000 * 60 * 2,
   }
 );
-// app.use(async (req, res, next) => {
-//   try {
-//     const client = await clientPromise;
-//     req.db = client.db("users");
-//     next();
-//   } catch (err) {
-//     console.error("Database connection error:", err);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
 
 app.use(async (req, res, next) => {
   try {
@@ -208,5 +198,5 @@ app.post("/signup", async (req, res) => {
 
 // connection
 const port = process.env.PORT || 9001;
-app.listen(port, () => console.log(`Listening to port ${port}`));
+app.listen(port, () => console.log(`Listening to port http://localhost:${port}`));
 /*ENDPOST Q */

@@ -4,7 +4,7 @@ dotenv.config();
 const config = {
   mongodb: {
     // TODO Change (or review) the url to your MongoDB:
-    url: process.env.DB_URI,
+    url: "mongodb+srv://byrgyin:RLQvSzK3FgpEV4dB@cluster0.udpyldq.mongodb.net/users?retryWrites=true&w=majority&appName=Cluster0",
 
     // TODO Change this to your database name:
     databaseName: "users",
