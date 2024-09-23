@@ -8,19 +8,11 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-// Routes
-/*
-app.get("/", async (req, res, next) => {
-  return res.status(200).json({
-    title: "Express Testing",
-    message: "The app is working properly!",
-  });
-});
-*/
+
 app.get("/", (req, res) => res.send("Express on Vercel"));
 
 const clientPromise = MongoClient.connect(
-  "mongodb+srv://byrgyin:RLQvSzK3FgpEV4dB@cluster0.udpyldq.mongodb.net/users?retryWrites=true&w=majority&appName=Cluster0",
+  "mongodb://root:HR0%5C7V58zZ%60s@107.191.48.201:32782/",
   {
     maxPoolSize: 10,
     minPoolSize: 1,
